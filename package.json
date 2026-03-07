@@ -1,0 +1,86 @@
+{
+  "name": "ai-history-logger",
+  "displayName": "AI History Logger",
+  "description": "Yapay zeka ile yazilan kodlari golge git mimarisiyle loglar ve geri alma imkani sunar.",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TunahanYavuz/ai-history-logger"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ai-history.start",
+        "title": "AI: Snapshot Al (Gölge Git Başlat)",
+        "icon": "$(record)"
+      },
+      {
+        "command": "ai-history.save",
+        "title": "AI: Değişiklikleri Kaydet",
+        "icon":"$(save)"
+      },
+      {
+        "command": "ai-history.rollback",
+        "title": "AI: Bu Değişikliği Geri Al",
+        "icon": "$(history)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "ai-history.rollback",
+          "group": "navigation",
+          "when": "resourceFilename == AI_Summary.md"
+        },
+        {
+          "command": "ai-history.start",
+          "group": "navigation@1",
+          "when": "resourceFilename != AI_Summary.md"
+        },
+        {
+          "command": "ai-history.save",
+          "group": "navigation@2",
+          "when": "resourceFilename != AI_Summary.md"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "ai-history.start",
+        "key": "ctrl+alt+a",
+        "mac": "cmd+alt+a"
+      },
+      {
+        "command": "ai-history.save",
+        "key": "ctrl+alt+s",
+        "mac": "cmd+alt+s"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  }
+  
+}
