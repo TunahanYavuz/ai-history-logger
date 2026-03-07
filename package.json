@@ -3,6 +3,8 @@
   "displayName": "AI History Logger",
   "description": "Yapay zeka ile yazilan kodlari golge git mimarisiyle loglar ve geri alma imkani sunar.",
   "version": "0.0.1",
+  "publisher": "Xyreler",
+  "license": "GPL-3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/TunahanYavuz/ai-history-logger"
