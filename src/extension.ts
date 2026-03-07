@@ -104,7 +104,8 @@ async function takeSnapshot() {
         vscode.window.showInformationMessage(t("snapshotTaking"));
         const options = {cwd: workspacePath};
 
-        await execAsync(`mkdir -p .ai-shadow`, options);
+        const shadowPath = path.join(workspacePath, '.ai-shadow');
+        await fs.mkdir(shadowPath, { recursive: true });        
         await execAsync(`git --git-dir=.ai-shadow/.git --work-tree=. init`, options);
         await execAsync(`git --git-dir=.ai-shadow/.git --work-tree=. add .`, options);
         await execAsync(`git -c user.name="AI History Logger" -c user.email="logger@ai.local" --git-dir=.ai-shadow/.git --work-tree=. commit --allow-empty -m "AI_START"`, options);
@@ -148,7 +149,8 @@ async function saveChanges() {
         // Boş diff kontrolü
         if(!stdout || stdout.trim() === ''){
             vscode.window.showInformationMessage(t("noChanges"));
-            await execAsync(`rm -rf .ai-shadow`, options);
+            const shadowPath = path.join(workspacePath, '.ai-shadow');
+            await fs.rm(shadowPath, { recursive: true, force: true });
             statusBarItem.hide();
             return;
         }
@@ -186,7 +188,8 @@ async function saveChanges() {
         await vscode.window.showTextDocument(document);
         vscode.window.showInformationMessage(t("saveSuccess"));
 
-        await execAsync(`rm -rf .ai-shadow`, options);
+        const shadowPath = path.join(workspacePath, '.ai-shadow');
+        await fs.rm(shadowPath, { recursive: true, force: true });
     }catch (error) {
         vscode.window.showErrorMessage(`${t("error")}${error}`);
     }
@@ -239,7 +242,7 @@ async function rollbackChanges() {
 
 // --- YARDIMCI FONKSİYONLAR ---
 function parseDiffToMarkdown(diffText: string): string {
-    const lines = diffText.split('\n');
+    const lines = diffText.split(/\r?\n/);
     let markdownOutput = "";
 
     let currentFile = "";

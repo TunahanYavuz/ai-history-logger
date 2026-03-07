@@ -1,7 +1,7 @@
 {
   "name": "ai-history-logger",
   "displayName": "AI History Logger",
-  "description": "Yapay zeka ile yazilan kodlari golge git mimarisiyle loglar ve geri alma imkani sunar.",
+  "description": "AI-written code is logged using a shadow git architecture and offers rollback capabilities.",
   "version": "0.0.1",
   "publisher": "Xyreler",
   "license": "GPL-3.0",
