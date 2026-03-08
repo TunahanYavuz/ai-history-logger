@@ -30,7 +30,7 @@ This extension is designed to work out-of-the-box with zero configuration. Curre
 
 ## Release Notes
 
-### 0.0.1
+### 0.0.4
 * Initial MVP release.
 * Introduced Shadow Git snapshot mechanics.
 * Added Prompt Input Box with focus lock (`ignoreFocusOut`).

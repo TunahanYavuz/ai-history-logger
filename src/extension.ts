@@ -139,7 +139,7 @@ async function saveChanges() {
 
     try {
 		const dynamicIgnores = await getDynamicIgnores(workspacePath);
-        const pathspecs = dynamicIgnores.map(ig => `':!${ig}'`).join(' ');
+        const pathspecs = dynamicIgnores.map(ig => `":!${ig}"`).join(' ');
 
         await execAsync(`git --git-dir=.ai-shadow/.git --work-tree=. add -A`, options);
 
@@ -149,8 +149,12 @@ async function saveChanges() {
         // Boş diff kontrolü
         if(!stdout || stdout.trim() === ''){
             vscode.window.showInformationMessage(t("noChanges"));
-            const shadowPath = path.join(workspacePath, '.ai-shadow');
-            await fs.rm(shadowPath, { recursive: true, force: true });
+            try {
+                const shadowPath = path.join(workspacePath, '.ai-shadow');
+                await fs.rm(shadowPath, { recursive: true, force: true });
+            } catch (e) {
+                console.log("Klasör kilitli, silme atlanıyor..."); 
+            }
             statusBarItem.hide();
             return;
         }
